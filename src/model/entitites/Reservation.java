@@ -34,13 +34,20 @@ public class Reservation {
     }
 
     public long duration() {
-        long diff = checkIn.getTime() - checkOut.getTime(); //diff pega a diferenca das 2 datas em milisegundos
+        long diff = checkOut.getTime() - checkIn.getTime(); //diff pega a diferenca das 2 datas em milisegundos
         return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS); //converter diff q estava em milisegundos p dias
     }
 
-    public void updateDates(Date checkIn, Date checkOut) {
+    public String updateDates(Date checkIn, Date checkOut) {
+        Date now = new Date();
+        if (checkIn.before(now) || checkIn.before(now)) {
+            return "Dates for update must be future";
+        } if (!checkOut.after(checkIn)) {
+            return "Check-out date must be after check-in date";
+        }
         this.checkIn = checkIn;
         this.checkOut = checkOut;
+        return null;
     }
 
     @Override
